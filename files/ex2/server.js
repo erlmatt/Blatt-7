@@ -54,3 +54,19 @@ app.get('/product/:id', (req, res) => {
 let port = 3000;
 app.listen(port);
 console.log("Server running at: http://localhost:" + port);
+
+app.get('/products', function (req, res) {
+    const productIds = [];
+    productsJSON.forEach(product => {
+        productIds.push(product.id);
+    });
+    res.send({ productIds });
+});
+
+app.get('/products:id', (req, res) => {
+    const pId = req.params.id;
+	for(let product in productsJSON){
+		if (product.id === pId) res.send(product);
+	}
+	res.status(400).send();
+});
